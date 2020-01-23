@@ -1,27 +1,39 @@
 import * as storage from "utils/storage.js";
+import _ from "lodash";
+import * as React from "react";
 
-export const defaultState = {
+export const initState = {
   isShowPanel: true
 };
 
-export const getData = async (keys = Object.keys(defaultState)) => {
-  const data = await storage.getData(keys);
-  if (typeof keys == "string") {
-    return data ? data : defaultState[key];
-  } else {
-    const newData = {
-      ...defaultState,
-      ...data
-    };
-    return Object.keys(newData)
-      .filter(key => keys.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = newData[key];
+export const initStateKeys = [..._.keys(initState)];
+
+export const getStorageData = (...keys) => {
+  keys = keys.length == 0 ? initStateKeys : keys;
+  const [isLoading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState({});
+
+  React.useEffect(async () => {
+    async function fetchData() {
+      const storageData = await storage.getData(keys);
+      const filterd = keys.reduce((obj, key) => {
+        obj[key] = key in storageData ? storageData[key] : initState[key];
         return obj;
       }, {});
-  }
+      setData({
+        ...filterd
+      });
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  return {
+    isLoading,
+    data
+  };
 };
 
-export const saveData = async data => {
-  return await storage.setData(data);
+export const saveStorageData = data => {
+  return storage.setData(data);
 };

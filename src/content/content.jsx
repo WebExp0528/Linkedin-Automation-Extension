@@ -1,9 +1,9 @@
-/* global document */
-
 import React from "react";
 import ReactDOM from "react-dom";
 import ext from "../utils/ext";
-// import "./content.css";
+import Draggable from "react-draggable";
+
+import Panel from "./components/Panel";
 
 function onRequest(request) {
   if (request.action === "change-color") {
@@ -17,7 +17,16 @@ class Main extends React.Component {
   render() {
     return (
       <div className="my-extension">
-        <h1>Hello world - My first Extension</h1>
+        <Draggable
+          defaultPosition={{ x: 0, y: 0 }}
+          position={null}
+          grid={[25, 25]}
+          scale={1}
+        >
+          <div>
+            <Panel />
+          </div>
+        </Draggable>
       </div>
     );
   }

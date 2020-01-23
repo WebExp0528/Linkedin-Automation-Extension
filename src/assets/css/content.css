@@ -1,0 +1,11 @@
+.panelWrapper {
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 3px;
+  float: left;
+  min-width: 360px;
+  min-height: 550px;
+}
+.panelHeader {
+  background-color: #eee;
+}

@@ -1,28 +1,31 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import sendMessage from "../../services/comunicationManager";
-import * as data from "utils/data.js";
+import * as data from "./../../../utils/data";
+import { CircularProgress } from "@material-ui/core";
 
-function setGreen() {
-  sendMessage("change-color", { color: "green" });
-}
+export default () => {
+  const storageData = data.getStorageData("isShowPanel");
 
-function setRed() {
-  sendMessage("change-color", { color: "red" });
-}
+  console.log(storageData);
 
-export default async() => {
-  
-  const isShowPanel = await data.getData('isShowPanel');
-  console.log('~~~~~~', isShowPanel);
-
-  const handleClickShowPanel = ()=>{
-    data.saveData(!isShowPanel)
+  if (storageData.isLoading) {
+    return <CircularProgress />;
   }
 
+  const handleClickShowPanel = () => {
+    data.saveStorageData({ isShowPanel: !storageData.data.isShowPanel });
+  };
+
   return (
-  <div>
-    <Button variant="contained" color="primary" onClick={}></Button>
-  </div>
-);
-}
+    <div>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleClickShowPanel}
+      >
+        {storageData.data.isShowPanel ? "Hide Panel" : "Show Panel"}
+      </Button>
+    </div>
+  );
+};

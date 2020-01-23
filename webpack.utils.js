@@ -33,13 +33,22 @@ const getOutput = (browserDir, outputDir = "dev") => {
 
 const getEntry = (sourceDir = "src") => {
   return {
-    popup: path.resolve(__dirname, `${sourceDir}/popup/popup.jsx`),
-    options: path.resolve(__dirname, `${sourceDir}/options/options.jsx`),
-    content: path.resolve(__dirname, `${sourceDir}/content/content.jsx`),
-    background: path.resolve(
-      __dirname,
-      `${sourceDir}/background/background.js`
-    ),
+    popup: [
+      "@babel/polyfill",
+      path.resolve(__dirname, `${sourceDir}/popup/popup.jsx`)
+    ],
+    options: [
+      "@babel/polyfill",
+      path.resolve(__dirname, `${sourceDir}/options/options.jsx`)
+    ],
+    content: [
+      "@babel/polyfill",
+      path.resolve(__dirname, `${sourceDir}/content/content.jsx`)
+    ],
+    background: [
+      "@babel/polyfill",
+      path.resolve(__dirname, `${sourceDir}/background/background.js`)
+    ],
     hotreload: path.resolve(__dirname, `${sourceDir}/utils/hot-reload.js`)
   };
 };

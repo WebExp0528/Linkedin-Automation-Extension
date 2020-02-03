@@ -5,7 +5,22 @@
   float: left;
   min-width: 360px;
   min-height: 550px;
+  z-index: 100000000;
 }
 .panelHeader {
   background-color: #eee;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid;
+}
+
+.activityWrapper {
+}
+
+.tabPanelBodyWrapper {
+  height: 390px;
+}
+
+.tabPanelFooterWrapper {
+  margin-top: 10px;
 }

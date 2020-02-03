@@ -1,0 +1,3 @@
+export const GET_ACTIVITY = "GET_ACTIVITY";
+
+export const SET_LIMIT_VALUE = "SET_LIMIT_VALUE";

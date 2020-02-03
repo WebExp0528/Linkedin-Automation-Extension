@@ -9,7 +9,7 @@ import PanelBody from "./PanelBody";
 const Panel = () => {
   return (
     <div className="panelWrapper">
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justify="center" alignItems="stretch">
         <Grid item>
           <PanelHeader />
         </Grid>

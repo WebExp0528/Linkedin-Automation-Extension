@@ -4,6 +4,9 @@ import * as React from "react";
 import { Grid, Tabs, Tab } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
+import TabPanel from "./TabPanel";
+import Activity from "./Activity";
+
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
@@ -34,10 +37,19 @@ const PanelBody = () => {
         indicatorColor="primary"
         textColor="primary"
       >
-        <StyledTab label="Item One" {...a11yProps(0)} />
-        <StyledTab label="Item Two" {...a11yProps(1)} />
-        <StyledTab label="Item Three" {...a11yProps(2)} />
+        <StyledTab label="Activity" {...a11yProps(0)} />
+        <StyledTab label="Messages" {...a11yProps(1)} />
+        <StyledTab label="People" {...a11yProps(2)} />
       </Tabs>
+      <TabPanel value={value} index={0}>
+        <Activity />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
     </div>
   );
 };

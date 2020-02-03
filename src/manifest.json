@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "author": "Kamil Mikosz",
+  "author": "WebDEV",
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
@@ -11,7 +11,7 @@
   "default_locale": "en",
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["http://www.linkedin.com/*", "https://www.linkedin.com/*"],
       "js": ["content/content.js"],
       "css": ["assets/css/content.css"]
     }
@@ -20,7 +20,12 @@
     "scripts": ["background/background.js", "hotreload/hotreload.js"],
     "persistent": true
   },
-  "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "http://www.linkedin.com/*",
+    "https://www.linkedin.com/*"
+  ],
   "options_ui": {
     "page": "options/index.html"
   },
@@ -29,7 +34,7 @@
       "19": "assets/icons/icon-19.png",
       "38": "assets/icons/icon-38.png"
     },
-    "default_title": "Extension Boilerplate",
+    "default_title": "Linkedin Auto Connect",
     "default_popup": "popup/index.html"
   }
 }

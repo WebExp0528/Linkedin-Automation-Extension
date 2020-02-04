@@ -5,7 +5,8 @@ const {
   getCopyPlugins,
   getZipPlugin,
   getFirefoxCopyPlugins,
-  getEntry
+  getEntry,
+  getResolves
 } = require("./webpack.utils");
 const config = require("./config.json");
 const CleanWebpackPlugin = require("clean-webpack-plugin");

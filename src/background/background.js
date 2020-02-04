@@ -13,10 +13,9 @@ import { delay, getRandomInt } from "utils/helper";
  * Define content script functions
  * @type {class}
  */
-var BG; //Background object
+let BG; //Background object
 class Background {
   constructor() {
-    this._port;
     this.init();
     this._isStarted = false;
     this._invitedCount = 0;
@@ -107,6 +106,7 @@ class Background {
         const now = new Date();
         this._runtime = now.getTime();
         this._limit = message.limit ? message.limit : 50;
+        this._invitedCount = 0;
         console.log("~~~~~limit is ", this._limit);
         this.startInvite();
         reply({ isStarted: this._isStarted });
@@ -254,7 +254,7 @@ class Background {
    * Start invit queue.
    */
   async startInvite() {
-    if (BG._invitedCount >= BG._limit) {
+    if (parseInt(BG._invitedCount) >= parseInt(BG._limit)) {
       BG._isStarted = false;
       return;
     }
@@ -300,15 +300,18 @@ class Background {
 
       await BG.closeTab(tab);
       ext.tabs.update(BG._searchPageTab.id, { highlighted: true });
-
+      console.log("invited count", BG._invitedCount);
+      console.log("limited count", BG._limit);
       if (isInvited) {
-        BG._invitedCount++;
+        BG.increaseInvitedCount();
       } else {
         continue;
       }
 
       const waitingTime = getRandomInt(40, 60) * 1000;
-      console.log(`~~~~~Invited ${item.name} and waiting for ${waitingTime}`);
+      console.log(
+        `~~~~~Invited ${item.name} and waiting for ${waitingTime}, invited count ${BG._invitedCount}`
+      );
       await delay(waitingTime);
     }
   }
@@ -317,6 +320,13 @@ class Background {
    */
   async stopInvite() {
     this._isStarted = false;
+  }
+
+  /**
+   * increase invited count
+   */
+  increaseInvitedCount() {
+    this._invitedCount++;
   }
 }
 

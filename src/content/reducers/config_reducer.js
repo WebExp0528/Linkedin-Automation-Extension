@@ -5,7 +5,6 @@ let INITIAL_STATE = {
 };
 
 export default function(state = INITIAL_STATE, action) {
-  console.log("~~~~~~~~~~~ this is action", state);
   switch (action.type) {
     case SET_LIMIT_VALUE:
       return {

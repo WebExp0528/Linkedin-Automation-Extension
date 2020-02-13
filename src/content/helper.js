@@ -1,16 +1,25 @@
 export const getPeopleFromSearchPage = () => {
+  var wrapperSelector = "div.search-result__wrapper";
   var linkSelector = "div.search-result__info>a.search-result__result-link";
-  var profileLinks = Array.from(document.querySelectorAll(linkSelector));
-  const filtered = profileLinks
-    .filter(item => {
-      return !item.classList.contains("disabled");
+
+  var sharedConnSelector = "div.search-result__social-proof";
+
+  var wrappers = Array.from(document.querySelectorAll(wrapperSelector));
+  const filtered = wrappers
+    .filter(wrapper => {
+      return (
+        !wrapper.querySelector(sharedConnSelector) &&
+        !wrapper.querySelector(linkSelector).classList.contains("disabled")
+      );
     })
     .map(item => {
+      const link = item.querySelector(linkSelector);
       return {
-        url: item.getAttribute("href"),
-        name: item.querySelector(".name-and-distance>.name").innerHTML
+        url: link.getAttribute("href"),
+        name: link.querySelector(".name-and-distance>.name").innerHTML
       };
     });
+  console.log("~~~~~filtered peoples~~~~~", filtered);
   return filtered;
 };
 

@@ -49,22 +49,9 @@ class Background {
 
     //Add New tab create listener
     ext.tabs.onCreated.addListener(tab => this.onCreatedTab(tab));
-
-    //Add Listener for browser action
-    ext.browserAction.onClicked.addListener(tabId =>
-      this.onClickedExtension(tabId)
-    );
   };
 
   //TODO: Listeners
-  /**
-   * Clicked Extension ICON
-   * @param {*} tabId
-   */
-  onClickedExtension = tabId => {
-    console.log("~~~~~Browser Action!", tabId);
-    // checkAuth();
-  };
 
   /**
    * Extension Installed

@@ -13,7 +13,6 @@ import { delay, getRandomInt } from "utils/helper";
  * Define content script functions
  * @type {class}
  */
-let BG; //Background object
 class Background {
   constructor() {
     this.init();
@@ -29,8 +28,7 @@ class Background {
    * Document Ready
    * @returns {void}
    */
-  init() {
-    BG = this;
+  init = () => {
     console.log("loaded Background Scripts");
 
     //When extension installed
@@ -63,24 +61,24 @@ class Background {
       { urls: ["<all_urls>"] },
       ["blocking"]
     );
-  }
+  };
 
   //TODO: Listeners
   /**
    * Clicked Extension ICON
    * @param {*} tabId
    */
-  onClickedExtension(tabId) {
+  onClickedExtension = tabId => {
     console.log("~~~~~Browser Action!", tabId);
     // checkAuth();
-  }
+  };
 
   /**
    * Extension Installed
    */
-  onInstalled() {
+  onInstalled = () => {
     console.log("~~~~~Installed Linkedin Extension!");
-  }
+  };
 
   /**
    * Message Handler Function
@@ -89,14 +87,14 @@ class Background {
    * @param { object } sender
    * @param { object } reply
    */
-  onMessage(message, sender, reply) {
+  onMessage = (message, sender, reply) => {
     console.log("~~~~~Received message", message);
     switch (message.type) {
       case GET_ACTIVITY: {
         reply({
-          runtime: BG._runtime,
-          invitedCount: BG._invitedCount,
-          isStarted: BG._isStarted
+          runtime: this._runtime,
+          invitedCount: this._invitedCount,
+          isStarted: this._isStarted
         });
         break;
       }
@@ -122,35 +120,35 @@ class Background {
       }
     }
     return true;
-  }
+  };
 
   /**
    * Connect with Extension
    *
    * @param {*} port
    */
-  onConnect(port) {
+  onConnect = port => {
     this._port = port;
     console.log("~~~~~Connected .....");
     this._port.onMessage.addListener(msg => this.onMessageFromExtension(msg));
-  }
+  };
 
   /**
    * Message from Extension
    *
    * @param {*} msg
    */
-  onMessageFromExtension(msg) {
+  onMessageFromExtension = msg => {
     console.log("~~~~Recieved message from Popup:" + msg);
-  }
+  };
 
   /**
    *
    * @param {object} tab
    */
-  onCreatedTab(tab) {
+  onCreatedTab = tab => {
     console.log("~~~~~Created new tab", tab);
-  }
+  };
 
   /**
    * When changes tabs
@@ -159,38 +157,38 @@ class Background {
    * @param {*} changeInfo
    * @param {*} tab
    */
-  onUpdatedTab(tabId, changeInfo, tab) {
+  onUpdatedTab = (tabId, changeInfo, tab) => {
     console.log("~~~~~Changed tab", tabId);
-  }
+  };
 
   /**
    * Listener BeforeRequest
    *
    * @param {object} details
    */
-  onBeforeRequest(details) {
+  onBeforeRequest = details => {
     console.log("~~~~~New Request", details);
     return { cancel: false };
-  }
+  };
 
   /**
    * get url from tab
    * @param {number} tabid
    */
-  getURLFromTab(tabid) {
+  getURLFromTab = tabid => {
     return new Promise(function(resolve, reject) {
       ext.tabs.get(tabid, function(tab) {
         resolve(tab.url ? tab.url : "");
       });
     });
-  }
+  };
 
   /**
    * open new tab
    *
    * @param {string} url
    */
-  openNewTab(url) {
+  openNewTab = url => {
     // return new Promise((resolve, reject) =>
     //   ext.tabs.create({ url: `https://www.linkedin.com${url}` }, function(tab) {
     //     resolve(tab);
@@ -207,64 +205,64 @@ class Background {
         });
       });
     });
-  }
+  };
 
   /**
    * Close specific tab
    * @param {} tab
    */
-  closeTab(tab) {
+  closeTab = tab => {
     return new Promise((resolve, reject) =>
       ext.tabs.remove(tab.id, () => {
         resolve();
       })
     );
-  }
+  };
 
   /**
    * Update Tab
    */
-  updateTab(tab, options) {
+  updateTab = (tab, options) => {
     return new Promise((resolve, reject) => {
       ext.tabs.update(tab.id, options, function(updateTab) {
         resolve(updateTab);
       });
     });
-  }
+  };
 
-  getTab(tab) {
+  getTab = tab => {
     return new Promise(resolve => {
       ext.tabs.get(tab.id, function(newTab) {
         resolve(newTab);
       });
     });
-  }
+  };
   /**
    * send message
    */
-  sendMessage(tab, msg) {
+  sendMessage = (tab, msg) => {
     return new Promise((resolve, reject) =>
       ext.tabs.sendMessage(tab.id, msg, function(response) {
         resolve(response);
       })
     );
-  }
+  };
 
   /**
    * Start invit queue.
    */
-  async startInvite() {
-    if (parseInt(BG._invitedCount) >= parseInt(BG._limit)) {
-      BG._isStarted = false;
+  startInvite = async () => {
+    if (parseInt(this._invitedCount) >= parseInt(this._limit)) {
+      this._isStarted = false;
       return;
     }
-    if (!BG._isStarted) {
+    if (!this._isStarted) {
       console.log("~~~~~ Invitation is stopped!!!!!");
       return;
     }
 
     while (1) {
-      const updatedTab = await BG.getTab(BG._searchPageTab);
+      const updatedTab = await this.getTab(this._searchPageTab);
       if (updatedTab.status === "complete") {
         break;
       }
@@ -274,60 +272,60 @@ class Background {
       type: GET_PEOPLE_SEARHPAGE
     });
 
-    await BG.sendInvitationMsg(searchResult);
+    await this.sendInvitationMsg(searchResult);
 
-    await BG.sendMessage(this._searchPageTab, {
+    await this.sendMessage(this._searchPageTab, {
       type: NEXT_SEARCH_PAGE
     });
 
-    await BG.startInvite();
-  }
+    await this.startInvite();
+  };
 
-  async sendInvitationMsg(peoples) {
+  sendInvitationMsg = async peoples => {
     console.log("~~~~~", peoples);
     for (let item of peoples) {
       console.log("~~~~~ People ~~~~~", item);
-      if (!BG._isStarted) {
+      if (!this._isStarted) {
         console.log("~~~~~ Invitation is stopped!!!!!");
         return;
       }
-      const tab = await BG.openNewTab(item.url);
+      const tab = await this.openNewTab(item.url);
 
-      const { isInvited } = await BG.sendMessage(tab, {
+      const { isInvited } = await this.sendMessage(tab, {
         type: INVITE_PEOPLE,
         msg: `Hi,${item.name}, how are you?`
       });
 
-      await BG.closeTab(tab);
-      ext.tabs.update(BG._searchPageTab.id, { highlighted: true });
-      console.log("invited count", BG._invitedCount);
-      console.log("limited count", BG._limit);
+      await this.closeTab(tab);
+      ext.tabs.update(this._searchPageTab.id, { highlighted: true });
+      console.log("invited count", this._invitedCount);
+      console.log("limited count", this._limit);
       if (isInvited) {
-        BG.increaseInvitedCount();
+        this.increaseInvitedCount();
       } else {
         continue;
       }
 
       const waitingTime = getRandomInt(40, 60) * 1000;
       console.log(
-        `~~~~~Invited ${item.name} and waiting for ${waitingTime}, invited count ${BG._invitedCount}`
+        `~~~~~Invited ${item.name} and waiting for ${waitingTime}, invited count ${this._invitedCount}`
       );
       await delay(waitingTime);
     }
-  }
+  };
   /**
    * Stop invite
    */
-  async stopInvite() {
+  stopInvite = async () => {
     this._isStarted = false;
-  }
+  };
 
   /**
    * increase invited count
    */
-  increaseInvitedCount() {
+  increaseInvitedCount = () => {
     this._invitedCount++;
-  }
+  };
 }
 
 export const background = new Background();

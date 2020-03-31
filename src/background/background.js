@@ -54,13 +54,6 @@ class Background {
     ext.browserAction.onClicked.addListener(tabId =>
       this.onClickedExtension(tabId)
     );
-
-    //Add Listener for webrequest
-    ext.webRequest.onBeforeRequest.addListener(
-      details => this.onBeforeRequest(details),
-      { urls: ["<all_urls>"] },
-      ["blocking"]
-    );
   };
 
   //TODO: Listeners
@@ -159,16 +152,6 @@ class Background {
    */
   onUpdatedTab = (tabId, changeInfo, tab) => {
     console.log("~~~~~Changed tab", tabId);
-  };
-
-  /**
-   * Listener BeforeRequest
-   *
-   * @param {object} details
-   */
-  onBeforeRequest = details => {
-    console.log("~~~~~New Request", details);
-    return { cancel: false };
   };
 
   /**

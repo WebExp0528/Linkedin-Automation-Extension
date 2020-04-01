@@ -8,21 +8,21 @@ import ActivityBody from "./ActivityBody";
 import ActivityFooter from "./ActivityFooter";
 
 const Activity = () => {
-  return (
-    <Grid
-      container
-      direction="column"
-      justify="center"
-      alignItems="stretch"
-      className="activityWrapper"
-    >
-      <Grid item>
-        <ActivityBody />
-      </Grid>
-      <Grid item>
-        <ActivityFooter />
-      </Grid>
-    </Grid>
-  );
+    return (
+        <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="stretch"
+            className="activityWrapper"
+        >
+            <Grid item>
+                <ActivityBody />
+            </Grid>
+            <Grid item>
+                <ActivityFooter />
+            </Grid>
+        </Grid>
+    );
 };
 export default Activity;

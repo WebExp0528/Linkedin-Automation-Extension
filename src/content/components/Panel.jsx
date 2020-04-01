@@ -7,17 +7,22 @@ import PanelHeader from "./PanelHeader";
 import PanelBody from "./PanelBody";
 
 const Panel = () => {
-  return (
-    <div className="panelWrapper">
-      <Grid container direction="column" justify="center" alignItems="stretch">
-        <Grid item>
-          <PanelHeader />
-        </Grid>
-        <Grid item>
-          <PanelBody />
-        </Grid>
-      </Grid>
-    </div>
-  );
+    return (
+        <div className="panelWrapper">
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="stretch"
+            >
+                <Grid item>
+                    <PanelHeader />
+                </Grid>
+                <Grid item>
+                    <PanelBody />
+                </Grid>
+            </Grid>
+        </div>
+    );
 };
 export default Panel;

@@ -1,35 +1,38 @@
 {
-  "name": "__MSG_appName__",
-  "author": "WebDEV",
-  "version": "0.0.1",
-  "manifest_version": 2,
-  "description": "__MSG_appDescription__",
-  "icons": {
-    "16": "assets/icons/icon-16.png",
-    "128": "assets/icons/icon-128.png"
-  },
-  "default_locale": "en",
-  "content_scripts": [
-    {
-      "matches": ["http://www.linkedin.com/*", "https://www.linkedin.com/*"],
-      "js": ["content/content.js"],
-      "css": ["assets/css/content.css"]
-    }
-  ],
-  "background": {
-    "scripts": ["background/background.js", "hotreload/hotreload.js"],
-    "persistent": true
-  },
-  "permissions": ["tabs", "storage", "*://www.linkedin.com/*"],
-  "options_ui": {
-    "page": "options/index.html"
-  },
-  "page_action": {
-    "default_icon": {
-      "19": "assets/icons/icon-24.png",
-      "38": "assets/icons/icon-32.png"
+    "name": "__MSG_appName__",
+    "author": "WebDEV",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "__MSG_appDescription__",
+    "icons": {
+        "16": "assets/icons/icon-16.png",
+        "128": "assets/icons/icon-128.png"
     },
-    "default_title": "Linkedin Auto Connect",
-    "default_popup": "popup/index.html"
-  }
+    "default_locale": "en",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://www.linkedin.com/*",
+                "https://www.linkedin.com/*"
+            ],
+            "js": ["content/content.js"],
+            "css": ["assets/css/content.css"]
+        }
+    ],
+    "background": {
+        "scripts": ["background/background.js", "hotreload/hotreload.js"],
+        "persistent": true
+    },
+    "permissions": ["tabs", "storage", "*://www.linkedin.com/*"],
+    "options_ui": {
+        "page": "options/index.html"
+    },
+    "page_action": {
+        "default_icon": {
+            "19": "assets/icons/icon-24.png",
+            "38": "assets/icons/icon-32.png"
+        },
+        "default_title": "Linkedin Auto Connect",
+        "default_popup": "popup/index.html"
+    }
 }

@@ -10,44 +10,44 @@ import ext from "utils/ext";
 import { isOnSearchPage } from "utils/helper";
 let myTimer;
 const ActivityFooter = () => {
-  const d = useDispatch();
+    const d = useDispatch();
 
-  const activityState = useSelector(state => state.activity);
-  const limitState = useSelector(state => state.config.limit);
+    const activityState = useSelector(state => state.activity);
+    const limitState = useSelector(state => state.config.limit);
 
-  const handleClickStart = () => {
-    if (!isOnSearchPage(location.href)) {
-      alert("This is no search page!");
-      return;
-    }
-
-    ext.runtime.sendMessage(
-      { type: activityState.isStarted ? STOP : START, limit: limitState },
-      function(response) {
-        console.log("~~~~~ status", response.isStarted);
-        if (response.isStarted) {
-          myTimer = setInterval(() => {
-            d(GetActivity());
-          }, 500);
-        } else {
-          clearInterval(myTimer);
-          d(GetActivity());
+    const handleClickStart = () => {
+        if (!isOnSearchPage(location.href)) {
+            alert("This is no search page!");
+            return;
         }
-      }
-    );
-  };
 
-  return (
-    <Container className="tabPanelFooterWrapper">
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ width: "100%" }}
-        onClick={handleClickStart}
-      >
-        {activityState.isStarted ? "Stop" : "Start"}
-      </Button>
-    </Container>
-  );
+        ext.runtime.sendMessage(
+            { type: activityState.isStarted ? STOP : START, limit: limitState },
+            function(response) {
+                console.log("~~~~~ status", response.isStarted);
+                if (response.isStarted) {
+                    myTimer = setInterval(() => {
+                        d(GetActivity());
+                    }, 500);
+                } else {
+                    clearInterval(myTimer);
+                    d(GetActivity());
+                }
+            }
+        );
+    };
+
+    return (
+        <Container className="tabPanelFooterWrapper">
+            <Button
+                variant="contained"
+                color="primary"
+                style={{ width: "100%" }}
+                onClick={handleClickStart}
+            >
+                {activityState.isStarted ? "Stop" : "Start"}
+            </Button>
+        </Container>
+    );
 };
 export default ActivityFooter;

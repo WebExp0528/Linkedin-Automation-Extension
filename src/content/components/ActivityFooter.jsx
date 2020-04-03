@@ -38,16 +38,15 @@ const ActivityFooter = () => {
     };
 
     return (
-        <Container className="tabPanelFooterWrapper">
-            <Button
-                variant="contained"
-                color="primary"
-                style={{ width: "100%" }}
-                onClick={handleClickStart}
-            >
-                {activityState.isStarted ? "Stop" : "Start"}
-            </Button>
-        </Container>
+        <Button
+            variant="contained"
+            color="primary"
+            style={{ width: "100%" }}
+            size="large"
+            onClick={handleClickStart}
+        >
+            {activityState.isStarted ? "Stop" : "Start"}
+        </Button>
     );
 };
 export default ActivityFooter;

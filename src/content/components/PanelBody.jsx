@@ -1,11 +1,21 @@
 import * as storage from "utils/storage.js";
 import _ from "lodash";
 import * as React from "react";
-import { Grid, Tabs, Tab } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { Tabs, Tab } from "@material-ui/core";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import green from "@material-ui/core/colors/green";
+import blueGrey from "@material-ui/core/colors/blueGrey";
 
 import TabPanel from "./TabPanel";
 import Activity from "./Activity";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        backgroundColor: blueGrey[50],
+        boxShadow:
+            "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"
+    }
+}));
 
 function a11yProps(index) {
     return {
@@ -16,12 +26,25 @@ function a11yProps(index) {
 
 const StyledTab = withStyles(theme => ({
     root: {
-        backgroundColor: "#eeeeee",
-        fontSize: theme.typography.pxToRem(14),
+        backgroundColor: blueGrey[400],
+        color: "#eee",
+        fontSize: theme.typography.pxToRem(20),
         fontWeight: theme.typography.fontWeightRegular,
         minWidth: 120,
-        width: 120
-    }
+        width: 120,
+        "&:hover": {
+            color: "#fff",
+            opacity: 1
+        },
+        "&$selected": {
+            color: "#fff",
+            fontWeight: theme.typography.fontWeightBold
+        },
+        "&:focus": {
+            color: "#fff"
+        }
+    },
+    selected: {}
 }))(props => <Tab disableRipple {...props} />);
 
 const PanelBody = () => {
@@ -29,12 +52,13 @@ const PanelBody = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const cls = useStyles();
     return (
-        <div className="panelBody">
+        <div className={cls.root}>
             <Tabs
                 value={value}
                 onChange={handleChange}
-                indicatorColor="primary"
+                indicatorColor="secondary"
                 textColor="primary"
             >
                 <StyledTab label="Activity" {...a11yProps(0)} />

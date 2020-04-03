@@ -1,5 +1,9 @@
 import ext from "utils/ext.js";
-import { GET_ACTIVITY, SET_LIMIT_VALUE } from "./type";
+import {
+    GET_ACTIVITY,
+    SET_LIMIT_VALUE,
+    SET_INCLUDE_MUTUAL_VALUE
+} from "./type";
 
 export function GetActivity() {
     return function(dispatch) {
@@ -12,5 +16,11 @@ export function GetActivity() {
 export function SetLimitValue(value) {
     return function(dispatch) {
         dispatch({ type: SET_LIMIT_VALUE, payload: value });
+    };
+}
+
+export function SetIncludeMutual(value) {
+    return function(dispatch) {
+        dispatch({ type: SET_INCLUDE_MUTUAL_VALUE, payload: value });
     };
 }

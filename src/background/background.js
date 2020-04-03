@@ -85,7 +85,6 @@ class Background {
                 this._runtime = now.getTime();
                 this._limit = message.limit ? message.limit : 50;
                 this._invitedCount = 0;
-                console.log("~~~~~limit is ", this._limit);
                 this.startInvite();
                 reply({ isStarted: this._isStarted });
                 break;

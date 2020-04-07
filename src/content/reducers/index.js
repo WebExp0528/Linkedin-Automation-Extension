@@ -1,11 +1,18 @@
 import { combineReducers } from "redux";
 
-import activity from "./activity_reducer";
-import config from "./config_reducer";
+import activity from "./activity";
+import config from "./config";
 
-const rootReducer = combineReducers({
-    activity,
-    config
-});
+const createAppReducer = initialState => {
+    const rootReducer = combineReducers({
+        activity,
+        config
+    });
 
-export default rootReducer;
+    return (state = initialState, action) => {
+        const nextState = rootReducer(state, action);
+        return nextState;
+    };
+};
+
+export default createAppReducer;

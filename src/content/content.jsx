@@ -3,9 +3,7 @@ import ReactDOM from "react-dom";
 import ext from "../utils/ext";
 import Draggable from "react-draggable";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import reducers from "./reducers";
-import thunk from "redux-thunk";
+import createStore from "./createStore";
 
 import Panel from "./components/Panel";
 import {
@@ -57,7 +55,8 @@ const onRequest = (message, sender, reply) => {
 
 ext.runtime.onMessage.addListener(onRequest);
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(undefined);
+console.log(store);
 
 class Main extends React.Component {
     render() {

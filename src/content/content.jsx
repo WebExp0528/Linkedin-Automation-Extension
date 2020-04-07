@@ -2,66 +2,28 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ext from "../utils/ext";
 import Draggable from "react-draggable";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
+
 import createStore from "./createStore";
 
 import Panel from "./components/Panel";
-import {
-    GET_PEOPLE_SEARHPAGE,
-    INVITE_PEOPLE,
-    NEXT_SEARCH_PAGE
-} from "utils/type.js";
-import {
-    getPeopleFromSearchPage,
-    delay,
-    invitePeople,
-    nextSearchPage
-} from "./helper";
-
-function pageScroll() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        return;
-    }
-    window.scrollBy(0, 10);
-    setTimeout(pageScroll, 10);
-}
-
-const onRequest = (message, sender, reply) => {
-    console.log("~~~~~ Received message in content script", message);
-    switch (message.type) {
-        case GET_PEOPLE_SEARHPAGE: {
-            pageScroll();
-            setTimeout(() => {
-                const links = getPeopleFromSearchPage();
-
-                reply(links);
-            }, 10000);
-
-            break;
-        }
-        case INVITE_PEOPLE: {
-            const invited = invitePeople(message.msg);
-            reply({ isInvited: invited });
-            break;
-        }
-        case NEXT_SEARCH_PAGE: {
-            nextSearchPage();
-            reply({});
-            break;
-        }
-    }
-    return true;
-};
+import onRequest from "./messageListener";
 
 ext.runtime.onMessage.addListener(onRequest);
 
 const store = createStore(undefined);
 console.log(store);
 
-class Main extends React.Component {
-    render() {
-        return (
-            <div className="my-extension">
+const Main = () => {
+    const activityState = useSelector(state => state.activity);
+    const url = window.location.href;
+
+    return (
+        <div className="my-extension">
+            {!(
+                activityState.isStarted &&
+                url.includes("https://www.linkedin.com/in/")
+            ) && (
                 <Draggable
                     defaultPosition={{ x: 0, y: 0 }}
                     position={null}
@@ -72,10 +34,10 @@ class Main extends React.Component {
                         <Panel />
                     </div>
                 </Draggable>
-            </div>
-        );
-    }
-}
+            )}
+        </div>
+    );
+};
 
 const app = document.createElement("div");
 app.id = "my-extension-root";

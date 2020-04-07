@@ -1,4 +1,4 @@
-export const getPeopleFromSearchPage = () => {
+export const getPeopleFromSearchPage = config => {
     var wrapperSelector = "div.search-result__wrapper";
     var linkSelector = "div.search-result__info>a.search-result__result-link";
 
@@ -7,8 +7,12 @@ export const getPeopleFromSearchPage = () => {
     var wrappers = Array.from(document.querySelectorAll(wrapperSelector));
     const filtered = wrappers
         .filter(wrapper => {
+            const shardConn = config.includeMutual
+                ? null
+                : wrapper.querySelector(sharedConnSelector);
+
             return (
-                !wrapper.querySelector(sharedConnSelector) &&
+                !shardConn &&
                 !wrapper
                     .querySelector(linkSelector)
                     .classList.contains("disabled")
@@ -108,6 +112,14 @@ export const createLocalStorageAccess = storageProp => {
             );
         }
     };
+};
+
+export const pageScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        return;
+    }
+    window.scrollBy(0, 10);
+    setTimeout(pageScroll, 10);
 };
 
 export default createLocalStorageAccess;

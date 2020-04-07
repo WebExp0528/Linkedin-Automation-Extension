@@ -16,6 +16,5 @@ export default (state = INITIAL_STATE, action) => {
         default:
             nextState = state;
     }
-    localStorage("@activity").set(nextState);
     return nextState;
 };

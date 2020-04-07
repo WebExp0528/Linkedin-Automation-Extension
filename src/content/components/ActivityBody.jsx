@@ -6,9 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import NumericInput from "react-numeric-input";
-import { SetLimitValue } from "./../actions/index";
+import {
+    SetLimitValue,
+    SetIncludeMutual,
+    GetActivity
+} from "./../actions/index";
 
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
     root: { height: "400px" },
@@ -30,10 +34,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ActivityBody = () => {
-    const cls = useStyles();
     const d = useDispatch();
+    React.useEffect(() => {
+        d(GetActivity());
+    }, []);
+
+    const cls = useStyles();
+
     const activityState = useSelector(state => state.activity);
+
     const limitState = useSelector(state => state.config.limit);
+    const includeMutualState = useSelector(state => state.config.includeMutual);
 
     const now = new Date();
     const elapsed = activityState.runtime
@@ -50,7 +61,9 @@ const ActivityBody = () => {
         d(SetLimitValue(value));
     };
 
-    const handleChangeIncludeMutual = event => {};
+    const handleChangeIncludeMutual = event => {
+        d(SetIncludeMutual(event.target.checked));
+    };
 
     return (
         <Grid
@@ -82,12 +95,21 @@ const ActivityBody = () => {
                                 step={1}
                                 value={limitState}
                                 onChange={changeLimitValue}
-                                style={{ width: "100px" }}
                             />
                         </h3>
                     </Grid>
                 </Grid>
-                <Grid justify="center" item></Grid>
+                <Grid item>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={includeMutualState}
+                                onChange={handleChangeIncludeMutual}
+                            />
+                        }
+                        label="Include mutual"
+                    />
+                </Grid>
             </Grid>
 
             <Grid className={cls.panel} item></Grid>

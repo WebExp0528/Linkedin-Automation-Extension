@@ -18,7 +18,6 @@ export default () => ({
     ...{
         activity: {
             ...initialState.activity,
-            ...localStorage("@activity").get(),
             ...initReducerState
         },
         config: {

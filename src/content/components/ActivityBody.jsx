@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Divider from "@material-ui/core/Divider";
 import NumericInput from "react-numeric-input";
 import {
     SetLimitValue,
@@ -15,6 +16,8 @@ import {
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import People from "./People";
+
 const useStyles = makeStyles(theme => ({
     root: { height: "400px" },
 
@@ -23,6 +26,15 @@ const useStyles = makeStyles(theme => ({
         padding: "1rem",
         boxShadow:
             "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"
+    },
+
+    queuePanel: {
+        backgroundColor: "#fff",
+        padding: "1rem",
+        boxShadow:
+            "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)",
+        height: "215px",
+        overflow: "scroll"
     },
 
     inputLimit: {
@@ -43,7 +55,7 @@ const ActivityBody = () => {
     const cls = useStyles();
 
     const activityState = useSelector(state => state.activity);
-
+    console.log("~~~~~~~~~~activitystate", activityState);
     const limitState = useSelector(state => state.config.limit);
     const includeMutualState = useSelector(state => state.config.includeMutual);
     const includePhotoState = useSelector(state => state.config.includePhoto);
@@ -128,7 +140,16 @@ const ActivityBody = () => {
                     />
                 </Grid>
             </Grid>
-            <Grid className={cls.panel} item></Grid>
+            <Grid className={cls.queuePanel} item>
+                {activityState.queuedPeoples.map(item => {
+                    return (
+                        <>
+                            <People people={item} />
+                            <Divider />
+                        </>
+                    );
+                })}
+            </Grid>
         </Grid>
     );
 };

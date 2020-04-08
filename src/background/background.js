@@ -264,7 +264,10 @@ class Background {
 
     sendInvitationMsg = async peoples => {
         console.log("~~~~~", peoples);
+        let i = 0;
         for (let item of peoples) {
+            i++;
+            console.log("~~~~~~~~~~", i);
             if (parseInt(this._invitedCount) >= parseInt(this._limit)) {
                 this.stopInvite();
                 return;
@@ -289,7 +292,15 @@ class Background {
             if (isInvited) {
                 this.increaseInvitedCount();
                 this._invitedPeoples.push(item);
+                this._queuedPeoples[i - 1] = {
+                    ...item,
+                    isInvited: true
+                };
             } else {
+                this._queuedPeoples[i - 1] = {
+                    ...item,
+                    isInvited: true
+                };
                 continue;
             }
 

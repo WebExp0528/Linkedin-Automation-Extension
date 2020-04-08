@@ -1,6 +1,6 @@
 <div align="center">
   <h1>
-    Webpack React Extension Boilerplate  
+    Linkedin Auto Connect Extension
   </h1>
 
   <p>
@@ -14,9 +14,9 @@
 ## Features
 
 <dl>
-  <dt>Write in your favourite framework - React! :) </dt>
+  <dt>Built using React! :) </dt>
   <dd>
-    Now you can create part of your exstensions in React framework - as you wish ;)
+    Now you can send invitations on linkedin automatically ;)
   </dd>
 </dl>
 
@@ -37,28 +37,14 @@
 <dl>
   <dt>Newest js technology stack</dt>
   <dd>
-    You can use ES6, ES5.
-  </dd>
-</dl>
-
-<dl>
-  <dt>Comfortable styles import</dt>
-  <dd>
-    With react you can loas styles directy and you can use scss for styling.
-  </dd>
-</dl>
-
-<dl>
-  <dt>Easily configurable and extendable</dt>
-  <dd>
-    Project use webpack so you can easly customize your project depends on your needs. In config.json you can define source path for each browser (if needed - default it's the same source), destintantion and develop directory.
+    ES6, ES5, React, Webpack
   </dd>
 </dl>
 
 <dl>
   <dt>Clean code</dt>
   <dd>
-    Clean code is the best way for long term support for project. Boilerplate has fully configured eslint with airbnb styleguide.
+    Clean code is the best way for long term support for project. Extension has fully configured eslint with airbnb styleguide.
   </dd>
 </dl>
 
@@ -71,20 +57,20 @@
 
 ## Installation
 
-1. Clone the repository `git clone https://github.com/kamilogerto2/webpack-react-extension-boilerplate.git`
-2. Run `npm install`
-3. Run `npm run build`
+1. Clone the repository `git clone https://github.com/WebExp0528/LinkedinAutomation.git`
+2. Run `npm install` or `yarn install`
+3. Run `npm run build` or `yarn build`
 
 ##### Load the extension in Chrome & Opera
 
 1. Open Chrome/Opera browser and navigate to chrome://extensions
 2. Select "Developer Mode" and then click "Load unpacked extension..."
-3. From the file browser, choose to `webpack-react-extension-boilerplate/dev/chrome` or (`wwebpack-react-extension-boilerplate/dev/opera`)
+3. From the file browser, choose to `LinkedinAutomation/dev/chrome` or (`LinkedinAutomation/dev/opera`)
 
 ##### Load the extension in Firefox
 
 1. Open Firefox browser and navigate to about:debugging
-2. Click "Load Temporary Add-on" and from the file browser, choose `webpack-react-extension-boilerplate/dev/firefox`
+2. Click "Load Temporary Add-on" and from the file browser, choose `LinkedinAutomation/dev/firefox`
 
 ##### Load the extension in Edge
 
@@ -94,11 +80,11 @@ https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/adding-and-rem
 
 The following tasks can be used when you want to start developing the extension and want to enable live reload -
 
-- `npm run watch-dev`
+-   `npm run watch-dev` or `yarn watch-dev`
 
 ## Packaging
 
-Run `npm run build` to create a zipped, production-ready extension for each browser. You can then upload that to the appstore.
+Run `npm run build` or `yarn build` to create a zipped, production-ready extension for each browser. You can then upload that to the appstore.
 
 ---
 

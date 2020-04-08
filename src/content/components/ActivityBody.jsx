@@ -9,7 +9,8 @@ import NumericInput from "react-numeric-input";
 import {
     SetLimitValue,
     SetIncludeMutual,
-    GetActivity
+    GetActivity,
+    SetIncludePhoto
 } from "./../actions/index";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -45,6 +46,7 @@ const ActivityBody = () => {
 
     const limitState = useSelector(state => state.config.limit);
     const includeMutualState = useSelector(state => state.config.includeMutual);
+    const includePhotoState = useSelector(state => state.config.includePhoto);
 
     const now = new Date();
     const elapsed = activityState.runtime
@@ -65,6 +67,10 @@ const ActivityBody = () => {
         d(SetIncludeMutual(event.target.checked));
     };
 
+    const handleChangeIncludePhoto = event => {
+        d(SetIncludePhoto(event.target.checked));
+    };
+
     return (
         <Grid
             container
@@ -81,14 +87,14 @@ const ActivityBody = () => {
             >
                 <Grid container direction="row" justify="center">
                     <Grid xs={6} item className={cls.textAlignEnd}>
-                        <h3>Elapsed Time: </h3>
-                        <h3>Invited Count: </h3>
-                        <h3>Limit: </h3>
+                        <h4>Elapsed Time:&nbsp;</h4>
+                        <h4>Invited Count:&nbsp;</h4>
+                        <h4>Limit:&nbsp;</h4>
                     </Grid>
                     <Grid xs={6} item>
-                        <h3>{`${hours}:${minutes}:${seconds}`}</h3>
-                        <h3>{activityState.invitedCount}</h3>
-                        <h3>
+                        <h4>{`${hours}:${minutes}:${seconds}`}</h4>
+                        <h4>{activityState.invitedCount}</h4>
+                        <h4>
                             <NumericInput
                                 min={0}
                                 max={200}
@@ -96,7 +102,7 @@ const ActivityBody = () => {
                                 value={limitState}
                                 onChange={changeLimitValue}
                             />
-                        </h3>
+                        </h4>
                     </Grid>
                 </Grid>
                 <Grid item>
@@ -110,8 +116,18 @@ const ActivityBody = () => {
                         label="Include mutual"
                     />
                 </Grid>
+                <Grid item>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={includePhotoState}
+                                onChange={handleChangeIncludePhoto}
+                            />
+                        }
+                        label="Include NoPhoto"
+                    />
+                </Grid>
             </Grid>
-
             <Grid className={cls.panel} item></Grid>
         </Grid>
     );

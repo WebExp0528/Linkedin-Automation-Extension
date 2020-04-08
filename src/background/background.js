@@ -22,6 +22,8 @@ class Background {
         this._searchPageTab;
         this._isLoadingPage = false;
         this._limit = 50;
+        this._queuedPeoples = [];
+        this._invitedPeoples = [];
     }
 
     /**
@@ -74,7 +76,8 @@ class Background {
                 reply({
                     runtime: this._runtime,
                     invitedCount: this._invitedCount,
-                    isStarted: this._isStarted
+                    isStarted: this._isStarted,
+                    queuedPeoples: this._queuedPeoples
                 });
                 break;
             }
@@ -229,10 +232,6 @@ class Background {
      * Start invit queue.
      */
     startInvite = async () => {
-        if (parseInt(this._invitedCount) >= parseInt(this._limit)) {
-            this._isStarted = false;
-            return;
-        }
         if (!this._isStarted) {
             console.log("~~~~~ Invitation is stopped!!!!!");
             return;
@@ -245,11 +244,16 @@ class Background {
             }
         }
 
-        const searchResult = await this.sendMessage(this._searchPageTab, {
+        this._queuedPeoples = await this.sendMessage(this._searchPageTab, {
             type: GET_PEOPLE_SEARHPAGE
         });
 
-        await this.sendInvitationMsg(searchResult);
+        await this.sendInvitationMsg(this._queuedPeoples);
+
+        if (!this._isStarted) {
+            console.log("~~~~~ Invitation is stopped!!!!!");
+            return;
+        }
 
         await this.sendMessage(this._searchPageTab, {
             type: NEXT_SEARCH_PAGE
@@ -261,6 +265,11 @@ class Background {
     sendInvitationMsg = async peoples => {
         console.log("~~~~~", peoples);
         for (let item of peoples) {
+            if (parseInt(this._invitedCount) >= parseInt(this._limit)) {
+                this.stopInvite();
+                return;
+            }
+
             console.log("~~~~~ People ~~~~~", item);
             if (!this._isStarted) {
                 console.log("~~~~~ Invitation is stopped!!!!!");
@@ -275,10 +284,11 @@ class Background {
 
             await this.closeTab(tab);
             ext.tabs.update(this._searchPageTab.id, { highlighted: true });
-            console.log("invited count", this._invitedCount);
-            console.log("limited count", this._limit);
+            console.log("~~~~~Invited count", this._invitedCount);
+            console.log("~~~~~Limited count", this._limit);
             if (isInvited) {
                 this.increaseInvitedCount();
+                this._invitedPeoples.push(item);
             } else {
                 continue;
             }

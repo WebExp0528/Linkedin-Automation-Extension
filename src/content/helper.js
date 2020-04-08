@@ -1,6 +1,7 @@
 export const getPeopleFromSearchPage = config => {
     var wrapperSelector = "div.search-result__wrapper";
     var linkSelector = "div.search-result__info>a.search-result__result-link";
+    var imageSelector = "div.search-result__image-wrapper img";
 
     var sharedConnSelector = "div.search-result__social-proof";
 
@@ -8,11 +9,15 @@ export const getPeopleFromSearchPage = config => {
     const filtered = wrappers
         .filter(wrapper => {
             const shardConn = config.includeMutual
-                ? null
-                : wrapper.querySelector(sharedConnSelector);
-
+                ? true
+                : !wrapper.querySelector(sharedConnSelector);
+            const image = config.includePhoto
+                ? true
+                : wrapper.querySelector(imageSelector);
+            // console.log(wrapper.querySelector(imageSelector));
             return (
-                !shardConn &&
+                image &&
+                shardConn &&
                 !wrapper
                     .querySelector(linkSelector)
                     .classList.contains("disabled")
@@ -20,9 +25,11 @@ export const getPeopleFromSearchPage = config => {
         })
         .map(item => {
             const link = item.querySelector(linkSelector);
+            const image = item.querySelector(imageSelector);
             return {
                 url: link.getAttribute("href"),
-                name: link.querySelector(".name-and-distance>.name").innerHTML
+                name: link.querySelector(".name-and-distance>.name").innerHTML,
+                image: image ? image.getAttribute("src") : null
             };
         });
     console.log("~~~~~filtered peoples~~~~~", filtered);

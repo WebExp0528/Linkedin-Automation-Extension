@@ -1,21 +1,17 @@
 import _ from "lodash";
 import * as React from "react";
-import { Grid } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
+import { Grid, FormControlLabel, Checkbox, Divider } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Divider from "@material-ui/core/Divider";
 import NumericInput from "react-numeric-input";
+
 import {
     SetLimitValue,
     SetIncludeMutual,
     GetActivity,
     SetIncludePhoto
-} from "./../actions/index";
-
-import { makeStyles } from "@material-ui/core/styles";
-
+} from "../../actions/index";
 import People from "./People";
 
 const useStyles = makeStyles(theme => ({

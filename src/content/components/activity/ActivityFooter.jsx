@@ -4,11 +4,13 @@ import * as React from "react";
 import { Container, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
-import { GetActivity } from "./../actions";
+import { GetActivity } from "../../actions";
 import { START, STOP } from "utils/type";
 import ext from "utils/ext";
 import { isOnSearchPage } from "utils/helper";
+
 let myTimer;
+
 const ActivityFooter = () => {
     const d = useDispatch();
 

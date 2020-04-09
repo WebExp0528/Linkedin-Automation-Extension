@@ -263,32 +263,27 @@ class Background {
     };
 
     sendInvitationMsg = async peoples => {
-        console.log("~~~~~", peoples);
         let i = 0;
         for (let item of peoples) {
             i++;
-            console.log("~~~~~~~~~~", i);
             if (parseInt(this._invitedCount) >= parseInt(this._limit)) {
                 this.stopInvite();
                 return;
             }
 
-            console.log("~~~~~ People ~~~~~", item);
             if (!this._isStarted) {
-                console.log("~~~~~ Invitation is stopped!!!!!");
                 return;
             }
             const tab = await this.openNewTab(item.url);
 
             const { isInvited } = await this.sendMessage(tab, {
                 type: INVITE_PEOPLE,
-                msg: `Hi,${item.name}, how are you?`
+                people: item
             });
 
             await this.closeTab(tab);
             ext.tabs.update(this._searchPageTab.id, { highlighted: true });
-            console.log("~~~~~Invited count", this._invitedCount);
-            console.log("~~~~~Limited count", this._limit);
+
             if (isInvited) {
                 this.increaseInvitedCount();
                 this._invitedPeoples.push(item);

@@ -3,7 +3,8 @@ import {
     GET_ACTIVITY,
     SET_LIMIT_VALUE,
     SET_INCLUDE_MUTUAL_VALUE,
-    SET_INCLUDE_PHOTO_VALUE
+    SET_INCLUDE_PHOTO_VALUE,
+    SET_INVITATION_MSG
 } from "./type";
 
 export function GetActivity() {
@@ -29,5 +30,11 @@ export function SetIncludeMutual(value) {
 export function SetIncludePhoto(value) {
     return function(dispatch) {
         dispatch({ type: SET_INCLUDE_PHOTO_VALUE, payload: value });
+    };
+}
+
+export function SetInvitationMsg(msg) {
+    return function(dispatch) {
+        dispatch({ type: SET_INVITATION_MSG, payload: msg });
     };
 }

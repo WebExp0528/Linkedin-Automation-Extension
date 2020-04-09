@@ -3,11 +3,11 @@ import _ from "lodash";
 import * as React from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-import green from "@material-ui/core/colors/green";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 
 import TabPanel from "./TabPanel";
-import Activity from "./Activity";
+import Activity from "../activity";
+import Messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -69,7 +69,7 @@ const PanelBody = () => {
                 <Activity />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                <Messages />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Item Three

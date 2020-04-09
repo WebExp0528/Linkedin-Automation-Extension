@@ -1,14 +1,15 @@
 import {
     SET_LIMIT_VALUE,
     SET_INCLUDE_MUTUAL_VALUE,
-    SET_INCLUDE_PHOTO_VALUE
+    SET_INCLUDE_PHOTO_VALUE,
+    SET_INVITATION_MSG
 } from "../../actions/type";
 import { createLocalStorageAccess as localStorage } from "./../../helper";
 
 export const INITIAL_STATE = {
     limit: 50,
     includeMutual: false,
-    includePhoto: false
+    invitationMsg: "Hi, {full_name}, how are you?"
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +33,13 @@ export default (state = INITIAL_STATE, action) => {
                 includePhoto: action.payload
             };
             break;
+        case SET_INVITATION_MSG: {
+            nextState = {
+                ...state,
+                invitationMsg: action.payload
+            };
+            break;
+        }
         default:
             nextState = state;
     }

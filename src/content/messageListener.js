@@ -10,6 +10,8 @@ import localStorage, {
     pageScroll
 } from "./helper";
 
+import { Strings } from "./../utils/helper";
+
 const onRequest = (message, sender, reply) => {
     console.log("~~~~~ Received message in content script", message);
     switch (message.type) {
@@ -23,7 +25,11 @@ const onRequest = (message, sender, reply) => {
             break;
         }
         case INVITE_PEOPLE: {
-            const invited = invitePeople(message.msg);
+            const { invitationMsg } = localStorage("@config").get();
+            const msg = Strings.create(invitationMsg, {
+                full_name: message.people.name
+            });
+            const invited = invitePeople(msg);
             reply({ isInvited: invited });
             break;
         }

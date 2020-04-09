@@ -6,7 +6,7 @@ import { Provider, useSelector } from "react-redux";
 
 import createStore from "./createStore";
 
-import Panel from "./components/Panel";
+import Panel from "./components/panel";
 import onRequest from "./messageListener";
 
 ext.runtime.onMessage.addListener(onRequest);
@@ -29,6 +29,7 @@ const Main = () => {
                     position={null}
                     grid={[25, 25]}
                     scale={1}
+                    enableUserSelectHack={false}
                 >
                     <div style={{ position: "fixed" }}>
                         <Panel />

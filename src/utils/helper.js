@@ -19,3 +19,15 @@ export const getRandomInt = (min, max) => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export const Strings = {
+    create: (function() {
+        var regexp = /{([^{]+)}/g;
+
+        return function(str, o) {
+            return str.replace(regexp, function(ignore, key) {
+                return (key = o[key]) == null ? "" : key;
+            });
+        };
+    })()
+};

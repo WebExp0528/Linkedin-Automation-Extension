@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import ext from "./../../utils/ext";
+import ext from "../../../utils/ext";
 
 const useStyles = makeStyles(theme => ({
     root: {

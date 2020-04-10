@@ -32,7 +32,6 @@
             "19": "assets/icons/icon-24.png",
             "38": "assets/icons/icon-32.png"
         },
-        "default_title": "Linkedin Auto Connect",
-        "default_popup": "popup/index.html"
+        "default_title": "Linkedin Auto Connect"
     }
 }

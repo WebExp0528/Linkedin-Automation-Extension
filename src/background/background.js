@@ -5,7 +5,8 @@ import {
     GET_PEOPLE_SEARHPAGE,
     STOP,
     INVITE_PEOPLE,
-    NEXT_SEARCH_PAGE
+    NEXT_SEARCH_PAGE,
+    MSG_SHOW_PAGE_ACTION
 } from "utils/type";
 import { delay, getRandomInt } from "utils/helper";
 
@@ -34,23 +35,19 @@ class Background {
         console.log("loaded Background Scripts");
 
         //When extension installed
-        ext.runtime.onInstalled.addListener(() => this.onInstalled());
+        ext.runtime.onInstalled.addListener(this.onInstalled());
 
         //Add message listener in Browser.
-        ext.runtime.onMessage.addListener((message, sender, reply) =>
-            this.onMessage(message, sender, reply)
-        );
-
-        //Add message listener from Extension
-        ext.extension.onConnect.addListener(port => this.onConnect(port));
+        ext.runtime.onMessage.addListener(this.onMessage);
 
         //Add Update listener for tab
-        ext.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
-            this.onUpdatedTab(tabId, changeInfo, tab)
-        );
+        ext.tabs.onUpdated.addListener(this.onUpdatedTab);
 
         //Add New tab create listener
-        ext.tabs.onCreated.addListener(tab => this.onCreatedTab(tab));
+        ext.tabs.onCreated.addListener(this.onCreatedTab);
+
+        //Add page action listener in browser
+        ext.pageAction.onClicked.addListener(this.onClickedExtension);
     };
 
     //TODO: Listeners
@@ -100,21 +97,13 @@ class Background {
                 reply({ isStarted: this._isStarted });
                 break;
             }
+
+            case MSG_SHOW_PAGE_ACTION: {
+                ext.pageAction.show(sender.tab.id);
+                reply(true);
+            }
         }
         return true;
-    };
-
-    /**
-     * Connect with Extension
-     *
-     * @param {*} port
-     */
-    onConnect = port => {
-        this._port = port;
-        console.log("~~~~~Connected .....");
-        this._port.onMessage.addListener(msg =>
-            this.onMessageFromExtension(msg)
-        );
     };
 
     /**
@@ -146,6 +135,18 @@ class Background {
     };
 
     /**
+     * When click extension icon
+     *
+     * @param {tab} tab
+     */
+    onClickedExtension = tab => {
+        ext.pageAction.setPopup({
+            tabId: tab.id,
+            popup: "/popup/index.html"
+        });
+    };
+
+    /**
      * get url from tab
      * @param {number} tabid
      */
@@ -163,12 +164,6 @@ class Background {
      * @param {string} url
      */
     openNewTab = url => {
-        // return new Promise((resolve, reject) =>
-        //   ext.tabs.create({ url: `https://www.linkedin.com${url}` }, function(tab) {
-        //     resolve(tab);
-        //   })
-        // );
-
         return new Promise(resolve => {
             ext.tabs.create(
                 { url: `https://www.linkedin.com${url}` },

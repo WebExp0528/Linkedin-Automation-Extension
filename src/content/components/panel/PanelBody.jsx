@@ -8,6 +8,7 @@ import blueGrey from "@material-ui/core/colors/blueGrey";
 import TabPanel from "./TabPanel";
 import Activity from "../activity";
 import Messages from "../messages";
+import Peoples from "../peoples";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -72,7 +73,7 @@ const PanelBody = () => {
                 <Messages />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
+                <Peoples />
             </TabPanel>
         </div>
     );

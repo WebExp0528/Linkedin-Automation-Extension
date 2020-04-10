@@ -8,6 +8,7 @@ import createStore from "./createStore";
 
 import Panel from "./components/panel";
 import onRequest from "./messageListener";
+import { MSG_SHOW_PAGE_ACTION } from "./../utils/msgType";
 
 ext.runtime.onMessage.addListener(onRequest);
 
@@ -16,6 +17,9 @@ console.log(store);
 
 const Main = () => {
     const activityState = useSelector(state => state.activity);
+
+    ext.runtime.sendMessage({ type: MSG_SHOW_PAGE_ACTION });
+
     const url = window.location.href;
 
     return (

@@ -4,7 +4,8 @@ export const INITIAL_STATE = {
     runtime: 0,
     invitedCount: 0,
     isStarted: false,
-    queuedPeoples: []
+    queuedPeoples: [],
+    invitedPeoples: []
 };
 
 export default (state = INITIAL_STATE, action) => {

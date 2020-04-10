@@ -40,12 +40,6 @@ class Background {
         //Add message listener in Browser.
         ext.runtime.onMessage.addListener(this.onMessage);
 
-        //Add Update listener for tab
-        ext.tabs.onUpdated.addListener(this.onUpdatedTab);
-
-        //Add New tab create listener
-        ext.tabs.onCreated.addListener(this.onCreatedTab);
-
         //Add page action listener in browser
         ext.pageAction.onClicked.addListener(this.onClickedExtension);
     };
@@ -74,7 +68,8 @@ class Background {
                     runtime: this._runtime,
                     invitedCount: this._invitedCount,
                     isStarted: this._isStarted,
-                    queuedPeoples: this._queuedPeoples
+                    queuedPeoples: this._queuedPeoples,
+                    invitedPeoples: this._invitedPeoples
                 });
                 break;
             }
@@ -85,6 +80,7 @@ class Background {
                 this._runtime = now.getTime();
                 this._limit = message.limit ? message.limit : 50;
                 this._invitedCount = 0;
+                this._invitedPeoples = [];
                 this.startInvite();
                 reply({ isStarted: this._isStarted });
                 break;
@@ -108,34 +104,6 @@ class Background {
             }
         }
         return true;
-    };
-
-    /**
-     * Message from Extension
-     *
-     * @param {*} msg
-     */
-    onMessageFromExtension = msg => {
-        console.log("~~~~Recieved message from Popup:" + msg);
-    };
-
-    /**
-     *
-     * @param {object} tab
-     */
-    onCreatedTab = tab => {
-        console.log("~~~~~Created new tab", tab);
-    };
-
-    /**
-     * When changes tabs
-     *
-     * @param {*} tabId
-     * @param {*} changeInfo
-     * @param {*} tab
-     */
-    onUpdatedTab = (tabId, changeInfo, tab) => {
-        console.log("~~~~~Changed tab", tabId);
     };
 
     /**
@@ -193,17 +161,6 @@ class Background {
                 resolve();
             })
         );
-    };
-
-    /**
-     * Update Tab
-     */
-    updateTab = (tab, options) => {
-        return new Promise((resolve, reject) => {
-            ext.tabs.update(tab.id, options, function(updateTab) {
-                resolve(updateTab);
-            });
-        });
     };
 
     getTab = tab => {

@@ -1,5 +1,4 @@
 import { GET_ACTIVITY } from "../../actions/type";
-import { createLocalStorageAccess as localStorage } from "./../../helper";
 
 export const INITIAL_STATE = {
     runtime: 0,

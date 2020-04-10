@@ -1,6 +1,15 @@
 export const START = "START";
+
 export const GET_PEOPLE_SEARHPAGE = "GET_PEOPLE_SEARHPAGE";
+
 export const STOP = "STOP";
+
 export const INVITE_PEOPLE = "INVITE_PEOPLE";
+
 export const NEXT_SEARCH_PAGE = "NEXT_SEARCH_PAGE";
+
 export const MSG_SHOW_PAGE_ACTION = "MSG_SHOW_PAGE_ACTION";
+
+export const MSG_DISPLAY_STATUS = "MSG_DISPLAY_STATUS";
+
+export const MSG_GET_CONFIG = "MSG_GET_CONFIG";

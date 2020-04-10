@@ -4,7 +4,8 @@ import {
     SET_LIMIT_VALUE,
     SET_INCLUDE_MUTUAL_VALUE,
     SET_INCLUDE_PHOTO_VALUE,
-    SET_INVITATION_MSG
+    SET_INVITATION_MSG,
+    SET_DISPLAY_VALUE
 } from "./type";
 
 export function GetActivity() {
@@ -36,5 +37,11 @@ export function SetIncludePhoto(value) {
 export function SetInvitationMsg(msg) {
     return function(dispatch) {
         dispatch({ type: SET_INVITATION_MSG, payload: msg });
+    };
+}
+
+export function SetDisplayStatus(value) {
+    return function(dispatch) {
+        dispatch({ type: SET_DISPLAY_VALUE, payload: value });
     };
 }

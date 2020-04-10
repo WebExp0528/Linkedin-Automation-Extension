@@ -2,8 +2,6 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import Popup from "./containers/popup/popup";
+import Popup from "./containers/popup";
 
-const Index = () => <Popup />;
-
-ReactDOM.render(<Index />, document.getElementById("display-container"));
+ReactDOM.render(<Popup />, document.getElementById("display-container"));

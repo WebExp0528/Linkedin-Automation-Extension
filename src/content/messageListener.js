@@ -1,13 +1,16 @@
 import {
     GET_PEOPLE_SEARHPAGE,
     INVITE_PEOPLE,
-    NEXT_SEARCH_PAGE
+    NEXT_SEARCH_PAGE,
+    MSG_DISPLAY_STATUS,
+    MSG_GET_CONFIG
 } from "utils/type.js";
 import localStorage, {
     getPeopleFromSearchPage,
     invitePeople,
     nextSearchPage,
-    pageScroll
+    pageScroll,
+    changeDisplayStatusPanel
 } from "./helper";
 
 import { Strings } from "./../utils/helper";
@@ -37,6 +40,19 @@ const onRequest = (message, sender, reply) => {
             nextSearchPage();
             reply({});
             break;
+        }
+        case MSG_DISPLAY_STATUS: {
+            localStorage("@config").set({
+                ...localStorage("@config").get(),
+                displayStatus: message.status
+            });
+            changeDisplayStatusPanel(message.status);
+            reply();
+            break;
+        }
+        case MSG_GET_CONFIG: {
+            const config = localStorage("@config").get();
+            reply(config);
         }
     }
     return true;

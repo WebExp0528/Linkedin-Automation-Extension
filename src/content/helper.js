@@ -129,4 +129,9 @@ export const pageScroll = () => {
     setTimeout(pageScroll, 10);
 };
 
+export const changeDisplayStatusPanel = status => {
+    const panel = document.querySelector(".linkedin-extension-panel");
+    panel.setAttribute("style", `display:${status ? "block" : "none"}`);
+};
+
 export default createLocalStorageAccess;

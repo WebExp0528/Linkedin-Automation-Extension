@@ -99,6 +99,10 @@ class Background {
             }
 
             case MSG_SHOW_PAGE_ACTION: {
+                ext.pageAction.setPopup({
+                    tabId: sender.tab.id,
+                    popup: "/popup/index.html"
+                });
                 ext.pageAction.show(sender.tab.id);
                 reply(true);
             }
@@ -140,10 +144,7 @@ class Background {
      * @param {tab} tab
      */
     onClickedExtension = tab => {
-        ext.pageAction.setPopup({
-            tabId: tab.id,
-            popup: "/popup/index.html"
-        });
+        ext.pageAction.show(tab.id);
     };
 
     /**

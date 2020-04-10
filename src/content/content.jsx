@@ -17,13 +17,14 @@ console.log(store);
 
 const Main = () => {
     const activityState = useSelector(state => state.activity);
+    const { displayStatus } = useSelector(state => state.config);
 
     ext.runtime.sendMessage({ type: MSG_SHOW_PAGE_ACTION });
 
     const url = window.location.href;
-
+    const display = displayStatus ? "block" : "none";
     return (
-        <div className="my-extension">
+        <div className="linkedin-extension-panel" style={{ display: display }}>
             {!(
                 activityState.isStarted &&
                 url.includes("https://www.linkedin.com/in/")

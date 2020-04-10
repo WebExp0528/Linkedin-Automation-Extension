@@ -7,7 +7,7 @@
     <strong>Works for Chrome, Opera, Edge & Firefox.</strong>
   </p>
   <p>
-  This plugin is higly inspired by extension-boilerplate (https://github.com/EmailThis/extension-boilerplate)
+  This plugin is higly inspired by extension-boilerplate (https://github.com/WebExp0528/React-Extension-Boilderplate.git)
   </p>
 </div>
 

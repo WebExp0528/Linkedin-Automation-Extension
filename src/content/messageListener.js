@@ -12,11 +12,12 @@ import localStorage, {
     pageScroll,
     changeDisplayStatusPanel
 } from "./helper";
+import { SetDisplayStatus } from "./actions";
 
 import { Strings } from "./../utils/helper";
+import { store } from "./content";
 
 const onRequest = (message, sender, reply) => {
-    console.log("~~~~~ Received message in content script", message);
     switch (message.type) {
         case GET_PEOPLE_SEARHPAGE: {
             pageScroll();
@@ -42,16 +43,12 @@ const onRequest = (message, sender, reply) => {
             break;
         }
         case MSG_DISPLAY_STATUS: {
-            localStorage("@config").set({
-                ...localStorage("@config").get(),
-                displayStatus: message.status
-            });
-            changeDisplayStatusPanel(message.status);
+            store.dispatch(SetDisplayStatus(message.status));
             reply();
             break;
         }
         case MSG_GET_CONFIG: {
-            const config = localStorage("@config").get();
+            const { config } = store.getState();
             reply(config);
         }
     }

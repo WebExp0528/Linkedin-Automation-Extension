@@ -10,10 +10,9 @@ import Panel from "./components/panel";
 import onRequest from "./messageListener";
 import { MSG_SHOW_PAGE_ACTION } from "./../utils/msgType";
 
-ext.runtime.onMessage.addListener(onRequest);
+export const store = createStore(undefined);
 
-const store = createStore(undefined);
-console.log(store);
+ext.runtime.onMessage.addListener(onRequest);
 
 const Main = () => {
     const activityState = useSelector(state => state.activity);

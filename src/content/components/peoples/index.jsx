@@ -32,8 +32,8 @@ const Peoples = () => {
             className={cls.root}
         >
             <div className={cls.panel}>
-                {invitedPeoples.map(item => {
-                    return <People people={item} />;
+                {invitedPeoples.map((item, index) => {
+                    return <People people={item} key={index} />;
                 })}
             </div>
         </Grid>

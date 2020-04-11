@@ -72,12 +72,6 @@ export const invitePeople = msg => {
     }
     connectButton.click();
 
-    const addNoteBtnSelector =
-        'button.artdeco-button.artdeco-button--muted.artdeco-button--3.artdeco-button--secondary.ember-view[aria-label="Add a note"]';
-    const addNoteButton = querySelector(addNoteBtnSelector);
-    if (!addNoteButton) return false;
-    addNoteButton.click();
-
     const customMSGSelector = "textarea.send-invite__custom-message";
     document.querySelector(customMSGSelector).value = msg;
 

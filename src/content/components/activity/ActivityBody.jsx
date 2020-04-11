@@ -137,7 +137,7 @@ const ActivityBody = () => {
                 </Grid>
             </Grid>
             <Grid className={cls.queuePanel} item>
-                {activityState.queuedPeoples.map(item => {
+                {activityState.queuedPeoples.map((item, index) => {
                     return (
                         <>
                             <People people={item} />

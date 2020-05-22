@@ -51,9 +51,11 @@ export const invitePeople = msg => {
         return false;
     }
 
+    // connect button
     let conBtnSelector = "button.pv-s-profile-actions--connect";
     let connectButton = querySelector(conBtnSelector);
     if (!connectButton) {
+        // more button
         const moreBtnSelector =
             'button.pv-s-profile-actions__overflow-toggle.artdeco-button.artdeco-button--2[aria-expanded="false"]';
         const moreButton = querySelector(moreBtnSelector);
@@ -62,6 +64,7 @@ export const invitePeople = msg => {
         }
         moreButton.click();
 
+        //connect button
         conBtnSelector =
             "li>div>artdeco-dropdown-item.pv-s-profile-actions.pv-s-profile-actions--connect.pv-s-profile-actions__overflow-button";
 
@@ -72,9 +75,21 @@ export const invitePeople = msg => {
     }
     connectButton.click();
 
+    // custom message
     const customMSGSelector = "textarea.send-invite__custom-message";
+    const customeMSGEle = querySelector(customMSGSelector);
+    if (!customeMSGEle) {
+        // addnote button
+        const addNoteBtnSelector =
+            'button.artdeco-button.artdeco-button--muted.artdeco-button--3.artdeco-button--secondary.ember-view[aria-label="Add a note"]';
+        const addNoteButton = querySelector(addNoteBtnSelector);
+        if (!addNoteButton) return false;
+        addNoteButton.click();
+    }
+
     document.querySelector(customMSGSelector).value = msg;
 
+    // invite button
     const invitBtnSelector =
         'button.artdeco-button.artdeco-button--3[aria-label="Send invitation"]';
     document.querySelector(invitBtnSelector).click();

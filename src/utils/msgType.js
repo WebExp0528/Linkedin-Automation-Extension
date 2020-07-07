@@ -1,6 +1,6 @@
 export const START = "START";
 
-export const GET_PEOPLE_SEARHPAGE = "GET_PEOPLE_SEARHPAGE";
+export const GET_PEOPLE_SEARCH_PAGE = "GET_PEOPLE_SEARCH_PAGE";
 
 export const STOP = "STOP";
 

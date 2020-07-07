@@ -1,5 +1,5 @@
 import {
-    GET_PEOPLE_SEARHPAGE,
+    GET_PEOPLE_SEARCH_PAGE,
     INVITE_PEOPLE,
     NEXT_SEARCH_PAGE,
     MSG_DISPLAY_STATUS,
@@ -19,7 +19,7 @@ import { store } from "./content";
 
 const onRequest = (message, sender, reply) => {
     switch (message.type) {
-        case GET_PEOPLE_SEARHPAGE: {
+        case GET_PEOPLE_SEARCH_PAGE: {
             pageScroll();
             const config = localStorage("@config").get();
             setTimeout(() => {

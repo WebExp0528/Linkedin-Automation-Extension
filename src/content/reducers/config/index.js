@@ -10,7 +10,7 @@ import { createLocalStorageAccess as localStorage } from "./../../helper";
 export const INITIAL_STATE = {
     limit: 50,
     includeMutual: false,
-    invitationMsg: "Hi, {full_name}, how are you?",
+    invitationMsg: "Hi, how are you?",
     displayStatus: true
 };
 

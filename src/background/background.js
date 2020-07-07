@@ -2,7 +2,7 @@ import ext from "./../utils/ext";
 import {
     GET_ACTIVITY,
     START,
-    GET_PEOPLE_SEARHPAGE,
+    GET_PEOPLE_SEARCH_PAGE,
     STOP,
     INVITE_PEOPLE,
     NEXT_SEARCH_PAGE,
@@ -198,7 +198,7 @@ class Background {
         }
 
         this._queuedPeoples = await this.sendMessage(this._searchPageTab, {
-            type: GET_PEOPLE_SEARHPAGE
+            type: GET_PEOPLE_SEARCH_PAGE
         });
 
         await this.sendInvitationMsg(this._queuedPeoples);

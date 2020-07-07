@@ -17,6 +17,8 @@ const customMSGSelector = "textarea.send-invite__custom-message";
 const addNoteBtnSelector = 'button.artdeco-button[aria-label="Add a note"]';
 const inviteBtnSelector = 'button.artdeco-button[aria-label="Send now"]';
 const doneBtnSelector = 'button.artdeco-button[aria-label="Done"]';
+const sendInvitationBtnSelector =
+    'button.artdeco-button[aria-label="Send Invitation"]';
 
 export const getPeopleFromSearchPage = config => {
     var wrappers = Array.from(document.querySelectorAll(wrapperSelector));
@@ -46,6 +48,8 @@ export const getPeopleFromSearchPage = config => {
                 image: image ? image.getAttribute("src") : null
             };
         });
+
+    console.log("~~~~~~~~~~~~ filtered peoples", filtered);
 
     return filtered;
 };
@@ -101,7 +105,11 @@ export const invitePeople = msg => {
         customMSGEle.dispatchEvent(evt);
 
         // invite button
-        querySelector(doneBtnSelector).click();
+        if (querySelector(doneBtnSelector)) {
+            querySelector(doneBtnSelector).click();
+        } else if (querySelector(sendInvitationBtnSelector)) {
+            querySelector(sendInvitationBtnSelector).click();
+        }
     }
 
     return true;

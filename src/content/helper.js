@@ -1,10 +1,24 @@
+const wrapperSelector = "div.search-result__wrapper";
+const linkSelector = "div.search-result__info>a.search-result__result-link";
+const imageSelector = "div.search-result__image-wrapper img";
+
+const sharedConnSelector = "div.search-result__social-proof";
+
+const nextBtnSelector =
+    "button.artdeco-pagination__button.artdeco-pagination__button--next";
+
+const conBtnSelector = "button.pv-s-profile-actions--connect";
+const moreConBtnSelector =
+    "li>div>artdeco-dropdown-item.pv-s-profile-actions.pv-s-profile-actions--connect.pv-s-profile-actions__overflow-button";
+const moreBtnSelector =
+    'button.pv-s-profile-actions__overflow-toggle.artdeco-button.artdeco-button--2[aria-expanded="false"]';
+
+const customMSGSelector = "textarea.send-invite__custom-message";
+const addNoteBtnSelector = 'button.artdeco-button[aria-label="Add a note"]';
+const inviteBtnSelector = 'button.artdeco-button[aria-label="Send now"]';
+const doneBtnSelector = 'button.artdeco-button[aria-label="Done"]';
+
 export const getPeopleFromSearchPage = config => {
-    var wrapperSelector = "div.search-result__wrapper";
-    var linkSelector = "div.search-result__info>a.search-result__result-link";
-    var imageSelector = "div.search-result__image-wrapper img";
-
-    var sharedConnSelector = "div.search-result__social-proof";
-
     var wrappers = Array.from(document.querySelectorAll(wrapperSelector));
     const filtered = wrappers
         .filter(wrapper => {
@@ -32,7 +46,7 @@ export const getPeopleFromSearchPage = config => {
                 image: image ? image.getAttribute("src") : null
             };
         });
-    console.log("~~~~~filtered peoples~~~~~", filtered);
+
     return filtered;
 };
 
@@ -52,12 +66,9 @@ export const invitePeople = msg => {
     }
 
     // connect button
-    let conBtnSelector = "button.pv-s-profile-actions--connect";
     let connectButton = querySelector(conBtnSelector);
     if (!connectButton) {
         // more button
-        const moreBtnSelector =
-            'button.pv-s-profile-actions__overflow-toggle.artdeco-button.artdeco-button--2[aria-expanded="false"]';
         const moreButton = querySelector(moreBtnSelector);
         if (!moreButton) {
             return false;
@@ -65,34 +76,34 @@ export const invitePeople = msg => {
         moreButton.click();
 
         //connect button
-        conBtnSelector =
-            "li>div>artdeco-dropdown-item.pv-s-profile-actions.pv-s-profile-actions--connect.pv-s-profile-actions__overflow-button";
-
-        connectButton = querySelector(conBtnSelector);
+        connectButton = querySelector(moreConBtnSelector);
         if (!connectButton) {
             return false;
         }
     }
     connectButton.click();
 
-    // custom message
-    const customMSGSelector = "textarea.send-invite__custom-message";
-    const customeMSGEle = querySelector(customMSGSelector);
-    if (!customeMSGEle) {
-        // addnote button
-        const addNoteBtnSelector =
-            'button.artdeco-button.artdeco-button--muted.artdeco-button--3.artdeco-button--secondary.ember-view[aria-label="Add a note"]';
-        const addNoteButton = querySelector(addNoteBtnSelector);
-        if (!addNoteButton) return false;
-        addNoteButton.click();
+    if (!msg || msg == "" || msg == " ") {
+        querySelector(inviteBtnSelector).click();
+    } else {
+        // custom message
+        let customMSGEle = querySelector(customMSGSelector);
+        if (!customMSGEle) {
+            // addnote button
+            const addNoteButton = querySelector(addNoteBtnSelector);
+            if (!addNoteButton) return false;
+            addNoteButton.click();
+            customMSGEle = querySelector(customMSGSelector);
+        }
+        customMSGEle.value = msg;
+        var evt = document.createEvent("Events"); //Add change event in textarea
+        evt.initEvent("change", true, true);
+        customMSGEle.dispatchEvent(evt);
+
+        // invite button
+        querySelector(doneBtnSelector).click();
     }
 
-    document.querySelector(customMSGSelector).value = msg;
-
-    // invite button
-    const invitBtnSelector =
-        'button.artdeco-button.artdeco-button--3[aria-label="Send invitation"]';
-    document.querySelector(invitBtnSelector).click();
     return true;
 };
 
@@ -101,8 +112,6 @@ export const querySelector = selector => {
 };
 
 export const nextSearchPage = () => {
-    const nextBtnSelector =
-        "button.artdeco-pagination__button.artdeco-pagination__button--next";
     querySelector(nextBtnSelector).click();
 };
 
@@ -139,7 +148,7 @@ export const pageScroll = () => {
 };
 
 export const changeDisplayStatusPanel = status => {
-    const panel = document.querySelector(".linkedin-extension-panel");
+    const panel = querySelector(".linkedin-extension-panel");
     panel.setAttribute("style", `display:${status ? "block" : "none"}`);
 };
 

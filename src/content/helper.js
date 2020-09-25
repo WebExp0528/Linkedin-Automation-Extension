@@ -9,7 +9,7 @@ const nextBtnSelector =
 
 const conBtnSelector = "button.pv-s-profile-actions--connect";
 const moreConBtnSelector =
-    "li>div>artdeco-dropdown-item.pv-s-profile-actions.pv-s-profile-actions--connect.pv-s-profile-actions__overflow-button";
+    "li>div>.artdeco-dropdown__item.pv-s-profile-actions--connect";
 const moreBtnSelector =
     'button.pv-s-profile-actions__overflow-toggle.artdeco-button.artdeco-button--2[aria-expanded="false"]';
 
@@ -59,60 +59,71 @@ export const delay = interval => {
 };
 
 export const invitePeople = msg => {
-    // if invitation is pending
-    if (
-        document.documentElement.innerHTML.indexOf(
-            "invitation has been sent to"
-        ) != -1 ||
-        document.documentElement.innerHTML.indexOf("Remove Connection") != -1
-    ) {
-        return false;
-    }
+    return new Promise(async (resolve, reject) => {
+        try {
+            await delay(10 * 1000);
 
-    // connect button
-    let connectButton = querySelector(conBtnSelector);
-    if (!connectButton) {
-        // more button
-        const moreButton = querySelector(moreBtnSelector);
-        if (!moreButton) {
-            return false;
+            // if invitation is pending
+            if (
+                document.documentElement.innerHTML.indexOf(
+                    "invitation has been sent to"
+                ) != -1 ||
+                document.documentElement.innerHTML.indexOf(
+                    "Remove Connection"
+                ) != -1
+            ) {
+                console.log("~~~~~ Already invited! ~~~~~");
+                return resolve(false);
+            }
+
+            // connect button
+            let connectButton = querySelector(conBtnSelector);
+            if (!connectButton) {
+                //more connect button
+                connectButton = querySelector(moreConBtnSelector);
+                if (!connectButton) {
+                    console.log("~~~~~ Could not found connect button ~~~~~");
+                    return resolve(false);
+                }
+            }
+            connectButton.click();
+            await delay(1 * 1000);
+            if (!msg || msg == "" || msg == " ") {
+                querySelector(inviteBtnSelector).click();
+            } else {
+                // custom message
+                let customMSGEle = querySelector(customMSGSelector);
+                if (!customMSGEle) {
+                    // addnote button
+                    const addNoteButton = querySelector(addNoteBtnSelector);
+                    if (!addNoteButton) {
+                        console.log(
+                            "~~~~~ Could not found Add note button ~~~~~"
+                        );
+                        return resolve(false);
+                    }
+                    addNoteButton.click();
+                    await delay(1 * 1000);
+                    customMSGEle = querySelector(customMSGSelector);
+                }
+                customMSGEle.value = msg;
+                var evt = document.createEvent("Events"); //Add change event in textarea
+                evt.initEvent("change", true, true);
+                customMSGEle.dispatchEvent(evt);
+                await delay(1 * 1000);
+                // invite button
+                if (querySelector(doneBtnSelector)) {
+                    querySelector(doneBtnSelector).click();
+                } else if (querySelector(sendInvitationBtnSelector)) {
+                    querySelector(sendInvitationBtnSelector).click();
+                }
+            }
+
+            return resolve(true);
+        } catch (err) {
+            resolve(false);
         }
-        moreButton.click();
-
-        //connect button
-        connectButton = querySelector(moreConBtnSelector);
-        if (!connectButton) {
-            return false;
-        }
-    }
-    connectButton.click();
-
-    if (!msg || msg == "" || msg == " ") {
-        querySelector(inviteBtnSelector).click();
-    } else {
-        // custom message
-        let customMSGEle = querySelector(customMSGSelector);
-        if (!customMSGEle) {
-            // addnote button
-            const addNoteButton = querySelector(addNoteBtnSelector);
-            if (!addNoteButton) return false;
-            addNoteButton.click();
-            customMSGEle = querySelector(customMSGSelector);
-        }
-        customMSGEle.value = msg;
-        var evt = document.createEvent("Events"); //Add change event in textarea
-        evt.initEvent("change", true, true);
-        customMSGEle.dispatchEvent(evt);
-
-        // invite button
-        if (querySelector(doneBtnSelector)) {
-            querySelector(doneBtnSelector).click();
-        } else if (querySelector(sendInvitationBtnSelector)) {
-            querySelector(sendInvitationBtnSelector).click();
-        }
-    }
-
-    return true;
+    });
 };
 
 export const querySelector = selector => {

@@ -33,8 +33,9 @@ const onRequest = (message, sender, reply) => {
             const msg = Strings.create(invitationMsg, {
                 full_name: message.people.name
             });
-            const invited = invitePeople(msg);
-            reply({ isInvited: invited });
+            invitePeople(msg).then(invited => {
+                reply({ isInvited: invited });
+            });
             break;
         }
         case NEXT_SEARCH_PAGE: {

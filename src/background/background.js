@@ -141,7 +141,7 @@ class Background {
                         tabId,
                         info
                     ) {
-                        if (info.status === "complete" && tabId === tab.id) {
+                        if (info.status == "complete" && tabId === tab.id) {
                             ext.tabs.onUpdated.removeListener(listener);
                             resolve(tab);
                         }
@@ -192,7 +192,7 @@ class Background {
 
         while (1) {
             const updatedTab = await this.getTab(this._searchPageTab);
-            if (updatedTab.status === "complete") {
+            if (updatedTab.status == "complete") {
                 break;
             }
         }

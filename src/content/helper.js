@@ -1,8 +1,9 @@
-const wrapperSelector = "div.search-result__wrapper";
-const linkSelector = "div.search-result__info>a.search-result__result-link";
-const imageSelector = "div.search-result__image-wrapper img";
+const wrapperSelector = `li>div.ember-view[class*="-result"]`;
 
-const sharedConnSelector = "div.search-result__social-proof";
+const linkSelector = "a.ember-view";
+const imageSelector = "div.ivm-image-view-model.ember-view img";
+
+// const sharedConnSelector = "div.search-result__social-proof";
 
 const nextBtnSelector =
     "button.artdeco-pagination__button.artdeco-pagination__button--next";
@@ -26,7 +27,7 @@ export const getPeopleFromSearchPage = config => {
         .filter(wrapper => {
             const shardConn = config.includeMutual
                 ? true
-                : !wrapper.querySelector(sharedConnSelector);
+                : wrapper.innerHTML.indexOf("shared connection") == -1;
             const image = config.includePhoto
                 ? true
                 : wrapper.querySelector(imageSelector);
@@ -44,7 +45,7 @@ export const getPeopleFromSearchPage = config => {
             const image = item.querySelector(imageSelector);
             return {
                 url: link.getAttribute("href"),
-                name: link.querySelector(".name-and-distance>.name").innerHTML,
+                name: "",
                 image: image ? image.getAttribute("src") : null
             };
         });

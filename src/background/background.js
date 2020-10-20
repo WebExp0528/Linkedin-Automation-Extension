@@ -135,7 +135,11 @@ class Background {
     openNewTab = url => {
         return new Promise(resolve => {
             ext.tabs.create(
-                { url: `https://www.linkedin.com${url}` },
+                {
+                    url: url.includes("https://")
+                        ? url
+                        : `https://www.linkedin.com${url}`
+                },
                 async tab => {
                     ext.tabs.onUpdated.addListener(function listener(
                         tabId,

@@ -5,7 +5,14 @@
  */
 export const getSearchResultWrappers = (parent = document) => {
     const wrapperSelector = `li>div.ember-view[class*="-result"]`;
-    return Array.from(parent.querySelectorAll(wrapperSelector));
+    const wrapperSelector1 = `li.reusable-search__result-container`;
+    return Array.from(
+        parent.querySelectorAll(wrapperSelector).length > 0
+            ? parent.querySelectorAll(wrapperSelector)
+            : parent.querySelectorAll(wrapperSelector1).length > 0
+            ? parent.querySelectorAll(wrapperSelector1)
+            : []
+    );
 };
 
 /**
@@ -34,7 +41,11 @@ export const getImage = (parent = document) => {
  */
 export const getProfileLink = (parent = document) => {
     const linkSelector = "a.ember-view";
-    return parent.querySelector(linkSelector);
+    const linkSelector1 = "a.app-aware-link";
+    return (
+        parent.querySelector(linkSelector) ||
+        parent.querySelector(linkSelector1)
+    );
 };
 
 export const delay = interval => {

@@ -87,8 +87,12 @@ export const getConnectBtn = (parent = document) => {
  * @param {HTMLElement} parent
  */
 export const getCustomMessageView = (parent = document) => {
-    const customMSGSelector = "textarea.send-invite__custom-message";
-    return parent.querySelector(customMSGSelector);
+    const customMSGSelector1 = "textarea.send-invite__custom-message";
+    const customMSGSelector2 = "textarea.ember-text-area";
+    return (
+        parent.querySelector(customMSGSelector1) ||
+        parent.querySelector(customMSGSelector2)
+    );
 };
 
 /**

@@ -35,7 +35,6 @@ const Messages = () => {
     const invitationMsgState = useSelector(state => state.config.invitationMsg);
 
     const handleClickFullName = () => {
-        console.log("~~~~~~~ invitation msg", invitationMsgState);
         d(SetInvitationMsg(`${invitationMsgState} {full_name}`));
     };
 

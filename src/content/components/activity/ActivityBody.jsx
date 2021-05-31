@@ -51,7 +51,7 @@ const ActivityBody = () => {
     const cls = useStyles();
 
     const activityState = useSelector(state => state.activity);
-    console.log("~~~~~~~~~~activitystate", activityState);
+
     const limitState = useSelector(state => state.config.limit);
     const includeMutualState = useSelector(state => state.config.includeMutual);
     const includePhotoState = useSelector(state => state.config.includePhoto);

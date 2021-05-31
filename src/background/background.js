@@ -32,8 +32,6 @@ class Background {
      * @returns {void}
      */
     init = () => {
-        console.log("loaded Background Scripts");
-
         //When extension installed
         ext.runtime.onInstalled.addListener(this.onInstalled());
 
@@ -49,9 +47,7 @@ class Background {
     /**
      * Extension Installed
      */
-    onInstalled = () => {
-        console.log("~~~~~Installed Linkedin Extension!");
-    };
+    onInstalled = () => {};
 
     /**
      * Message Handler Function
@@ -61,7 +57,6 @@ class Background {
      * @param { object } reply
      */
     onMessage = (message, sender, reply) => {
-        console.log("~~~~~Received message", message);
         switch (message.type) {
             case GET_ACTIVITY: {
                 reply({
@@ -190,7 +185,6 @@ class Background {
      */
     startInvite = async () => {
         if (!this._isStarted) {
-            console.log("~~~~~ Invitation is stopped!!!!!");
             return;
         }
 
@@ -208,7 +202,6 @@ class Background {
         await this.sendInvitationMsg(this._queuedPeoples);
 
         if (!this._isStarted) {
-            console.log("~~~~~ Invitation is stopped!!!!!");
             return;
         }
 
@@ -246,20 +239,18 @@ class Background {
                 this._invitedPeoples.push(item);
                 this._queuedPeoples[i - 1] = {
                     ...item,
-                    isInvited: true
+                    isInvited: "success"
                 };
             } else {
                 this._queuedPeoples[i - 1] = {
                     ...item,
-                    isInvited: true
+                    isInvited: "failed"
                 };
                 continue;
             }
 
             const waitingTime = getRandomInt(40, 60) * 1000;
-            console.log(
-                `~~~~~Invited ${item.name} and waiting for ${waitingTime}, invited count ${this._invitedCount}`
-            );
+
             await delay(waitingTime);
         }
     };

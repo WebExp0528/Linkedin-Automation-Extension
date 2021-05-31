@@ -28,7 +28,6 @@ export default () => {
 
     React.useEffect(() => {
         sendMessage({ type: MSG_GET_CONFIG }, res => {
-            console.log("~~~~~~ config", res);
             setStatus(res.displayStatus);
             setLoading(false);
         });

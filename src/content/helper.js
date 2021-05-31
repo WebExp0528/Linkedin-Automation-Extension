@@ -71,14 +71,20 @@ export const isInvited = (parent = document) => {
  *
  * @param {HTMLElement} parent
  */
-export const getConnectBtn = (parent = document) => {
-    const conBtnSelector = "button.pv-s-profile-actions--connect";
-    const moreConBtnSelector =
-        "li>div>.artdeco-dropdown__item.pv-s-profile-actions--connect";
-    return (
-        parent.querySelector(conBtnSelector) ||
-        parent.querySelector(moreConBtnSelector)
-    );
+export const getConnectBtn = (
+    parent = document.querySelector(".pv-top-card .pvs-profile-actions")
+) => {
+    const conBtnSelector = 'button[data-control-name="connect"]';
+    const moreConBtnSelector = 'li>div[data-control-name="connect"]';
+    const conBtnEl = parent.querySelector(conBtnSelector);
+    if (conBtnEl) {
+        return conBtnEl;
+    }
+
+    const moreConBtnEl = parent.querySelector(moreConBtnSelector);
+    if (moreConBtnEl) {
+        return moreConBtnEl;
+    }
 };
 
 /**
@@ -101,7 +107,7 @@ export const getCustomMessageView = (parent = document) => {
  * @param {HTMLElement} parent
  */
 export const getAddNoteBtn = (parent = document) => {
-    const addNoteBtnSelector = 'button.artdeco-button[aria-label="Add a note"]';
+    const addNoteBtnSelector = 'button[aria-label="Add a note"]';
     return parent.querySelector(addNoteBtnSelector);
 };
 
@@ -151,7 +157,6 @@ export const getPeopleFromSearchPage = config => {
             };
         });
 
-    console.log("~~~~~~~~~~~~ filtered peoples", filtered);
     return filtered;
 };
 
@@ -167,32 +172,47 @@ export const invitePeople = msg => {
 
             // if invitation is pending
             if (isInvited()) {
-                console.log("~~~~~ Already invited! ~~~~~");
                 return resolve(false);
             }
 
             // connect button
             let connectButton = getConnectBtn();
             if (!connectButton) {
-                console.log("~~~~~ Could not found connect button ~~~~~");
                 return resolve(false);
             }
             connectButton.click(); // Click connect button
 
             await delay(1 * 1000); // Delay for 1 second
 
+            const modal = document.querySelector(
+                'div.artdeco-modal.send-invite[role="dialog"]'
+            );
+            if (!modal) {
+                return resolve(false);
+            }
+
+            const modalConBtn = modal.querySelector(
+                'button[aria-label="Connect"]'
+            );
+            if (modalConBtn) {
+                await delay(1 * 1000);
+                modalConBtn.click();
+                await delay(1 * 1000);
+            }
+
             if (msg) {
                 // custom message
                 let customMSGEle = getCustomMessageView();
                 if (!customMSGEle) {
                     // Click Add Note button if customMessageView non exist
-                    const addNoteButton = getAddNoteBtn();
+                    const addNoteButton = getAddNoteBtn(modal);
+
                     if (!addNoteButton) {
                         return resolve(false);
                     }
                     addNoteButton.click();
                     await delay(1 * 1000);
-                    customMSGEle = getCustomMessageView();
+                    customMSGEle = getCustomMessageView(modal);
                 }
 
                 //Insert message in customMessageView
@@ -205,7 +225,7 @@ export const invitePeople = msg => {
             }
             // Click Invite Button
             const inviteBtn = getInviteBtn();
-            console.log(`~~~~ inviteBtn`, inviteBtn);
+
             if (!inviteBtn) {
                 return resolve(false);
             }

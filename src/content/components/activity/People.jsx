@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
         color: "blue"
     },
     pending: {
+        color: "green"
+    },
+    failed: {
         color: "red"
     }
 }));
@@ -35,7 +38,7 @@ const People = ({ people = { image: null, name: null } }) => {
         : ext.runtime.getURL("assets/img/avatar.png");
     people["isInvited"] = people.hasOwnProperty("isInvited")
         ? people.isInvited
-        : false;
+        : "pending";
 
     return (
         <div className={classes.root}>
@@ -47,10 +50,14 @@ const People = ({ people = { image: null, name: null } }) => {
                 <div>
                     <p
                         className={
-                            people.isInvited ? classes.invited : classes.pending
+                            people.isInvited === "success"
+                                ? classes.invited
+                                : people.isInvited === "failed"
+                                ? classes.failed
+                                : classes.pending
                         }
                     >
-                        {people.isInvited ? "Invited" : "Pending"}
+                        {people.isInvited}
                     </p>
                 </div>
             </div>

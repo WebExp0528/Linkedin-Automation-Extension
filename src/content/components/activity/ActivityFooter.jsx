@@ -26,7 +26,6 @@ const ActivityFooter = () => {
         ext.runtime.sendMessage(
             { type: activityState.isStarted ? STOP : START, limit: limitState },
             function(response) {
-                console.log("~~~~~ status", response.isStarted);
                 if (response.isStarted) {
                     myTimer = setInterval(() => {
                         d(GetActivity());
